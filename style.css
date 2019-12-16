@@ -44,3 +44,6 @@ main {
     color: white;
     cursor: pointer;
 }
+.mainview.container ul {
+    padding: 20px 0;
+}
