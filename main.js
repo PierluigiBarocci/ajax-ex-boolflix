@@ -2,14 +2,6 @@
 
 // https://api.themoviedb.org/3/movie/550?api_key=82d42d7ba19cc3f165f25f52f34da589
 
-// creiamo una var d'appoggio per liberare un po' il campo
-var api_themov = 'https://api.themoviedb.org/3/';
-// e la classica per chiamare handlebars in aiuto
-var template_html = $("#template").html();
-var template_function = Handlebars.compile(template_html);
-// Chiamata ajax statica per poi appendere un ul al container
-
-
 // Cambiare il valore della query sfruttando il val al click del bottone
 // dobbiamo intercettare il click sull'icona
 $('#search_icon').click(function(){
@@ -22,23 +14,30 @@ $('#search_icon').click(function(){
     if (user_research.length < 3) {
         alert('Mi dispiace, ma per iniziare la ricerca servono almeno 3 caratteri');
     } else {
-
+        myCalling(user_research);
     };
-
-
 })
-// aggiunger il click del tasto invio
-
+// al click del tasto invio
+$('.searchbar > input').keypress(function(event){
+    if (event.which == 13) {
+        $('.mainview.container').find('ul').remove();
+        var user_research = $('.searchbar > input').val();
+        if (user_research.length < 3) {
+            alert('Mi dispiace, ma per iniziare la ricerca servono almeno 3 caratteri');
+        } else {
+            myCalling(user_research);
+        };
+    }
+});
 
 // FUNCTIONS
 
-function myCalling() {
+function myCalling(choice) {
     $.ajax ({
-        'url': api_themov + 'search/movie',
-
+        'url': 'https://api.themoviedb.org/3/search/movie/',
         'data': {
             'api_key': '82d42d7ba19cc3f165f25f52f34da589',
-            'query': user_research,
+            'query': choice,
             'language': 'it-IT'
         },
         'method': 'GET',
@@ -47,17 +46,7 @@ function myCalling() {
             if (movies.length == 0) {
                 alert('Mi dispiace, non ho trovato niente, riprova');
             } else {
-                for (var i = 0; i < movies.length; i++) {
-                    var film = movies[i];
-                    var object = {
-                        'title': film.title,
-                        'ori_title': film.original_title,
-                        'language': film.original_language,
-                        'vote': film.vote_average
-                    };
-                    var final = template_function(object);
-                    $('.mainview.container').append(final);
-                }
+                myGenerating(movies);
             };
             $('.searchbar > input').val('');
         },
@@ -66,3 +55,19 @@ function myCalling() {
         }
     });
 };
+
+function myGenerating(array) {
+    for (var i = 0; i < array.length; i++) {
+        var object = array[i];
+        var template_html = $("#template").html();
+        var template_function = Handlebars.compile(template_html);
+        var properties = {
+            'title': object.title,
+            'ori_title': object.original_title,
+            'language': object.original_language,
+            'vote': object.vote_average
+        };
+        var final = template_function(properties);
+        $('.mainview.container').append(final);
+    }
+}
