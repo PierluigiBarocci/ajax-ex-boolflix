@@ -14,8 +14,11 @@ header::after {
     display: table;
     content: '';
 }
+body {
+    background-color: #2a2727;
+}
 main {
-    height: calc(100vh - 80px);
+    height: calc(100% - 80px);
     background-color: #2a2727;
 }
 .container {
@@ -46,4 +49,5 @@ main {
 }
 .mainview.container ul {
     padding: 20px 0;
+    color: lightgrey;
 }
