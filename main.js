@@ -1,7 +1,3 @@
-// Example api request
-
-// https://api.themoviedb.org/3/movie/550?api_key=82d42d7ba19cc3f165f25f52f34da589
-
 // Cambiare il valore della query sfruttando il val al click del bottone
 // dobbiamo intercettare il click sull'icona
 $('#search_icon').click(function(){
@@ -46,7 +42,10 @@ function myCalling(choice) {
             if (movies.length == 0) {
                 alert('Mi dispiace, non ho trovato niente, riprova');
             } else {
-                myGenerating(movies);
+                for (var i = 0; i < movies.length; i++) {
+                    var film = movies[i];
+                    myGenerating(film);
+                };
             };
             $('.searchbar > input').val('');
         },
@@ -56,9 +55,7 @@ function myCalling(choice) {
     });
 };
 
-function myGenerating(array) {
-    for (var i = 0; i < array.length; i++) {
-        var object = array[i];
+function myGenerating(object) {
         var template_html = $("#template").html();
         var template_function = Handlebars.compile(template_html);
         var properties = {
@@ -69,5 +66,4 @@ function myGenerating(array) {
         };
         var final = template_function(properties);
         $('.mainview.container').append(final);
-    }
 }
