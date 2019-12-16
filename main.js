@@ -83,6 +83,13 @@ function mdbApiCall(choice) {
                 for (var i = 0; i < movies.length; i++) {
                     var film = movies[i];
                     cardGenerator(film);
+                    var prov_vote = (film.vote_average / 2);
+                    var stars_vote = Math.ceil(prov_vote);
+                    var star_full = '<i class="fas fa-star"></i>';
+                    var star_empty = '<i class="far fa-star"></i>';
+                    for (var j = 0; j < stars_vote; j++) {
+                        $('.mainview.container ul:last-child').append(star_full);
+                    };
                 };
             };
             // empting searchbar
