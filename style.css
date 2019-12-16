@@ -4,3 +4,43 @@
     font-family: 'Lato', sans-serif;
     box-sizing: border-box;
 }
+
+header {
+    height: 80px;
+    background-color: black;
+}
+header::after {
+    clear: both;
+    display: table;
+    content: '';
+}
+main {
+    height: calc(100vh - 80px);
+    background-color: #2a2727;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.logo {
+    line-height: 80px;
+    height: 80px;
+    width: 30%;
+    float: left;
+    color: #E50914;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.searchbar {
+    text-align: right;
+    line-height: 80px;
+    height: 80px;
+    width: 70%;
+    float: left;
+}
+.searchbar i {
+    color: white;
+    cursor: pointer;
+}
