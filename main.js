@@ -63,6 +63,7 @@ $('.searchbar > input').keypress(function(event){
 // FUNCTIONS
 
 function mdbApiCall(choice) {
+    // calling for films
     $.ajax ({
         'url': 'https://api.themoviedb.org/3/search/movie/',
         'data': {
@@ -85,6 +86,7 @@ function mdbApiCall(choice) {
             alert('error');
         }
     });
+    // calling for series
     $.ajax ({
         'url': 'https://api.themoviedb.org/3/search/tv/',
         'data': {
@@ -144,12 +146,13 @@ function cardGenerator(object) {
             }
         };
         var properties = {
-            'title': object.name,
-            'ori_title': object.original_name,
+            'title': object.name || object.title,
+            'ori_title': object.original_name || object.original_title,
             'language': flag_lang,
             'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
             'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote)
         };
+        console.log(object);
         var final = template_function(properties);
         $('.mainview.container').append(final);
 }
