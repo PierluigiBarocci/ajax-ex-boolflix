@@ -23,15 +23,17 @@
             <div class="mainview container"></div>
         </main>
         <script id="template" type="text/x-handlebars-template">
-            <ul>
-                <li>Titolo: {{ title }}</li>
-                <li>Titolo Originale: {{ ori_title }}</li>
-                <li>Lingua: {{ language }}</li>
-                <li>Voto: {{ vote }}</li>
-            </ul>
+            <div class="card">
+                <ul>
+                    <li>Titolo: {{ title }}</li>
+                    <li>Titolo Originale: {{ ori_title }}</li>
+                    <li>Lingua: {{ language }}</li>
+                    <li>Voto: {{{ vote }}}{{{ no_vote }}}</li>
+                </ul>
+            </div>
         </script>
         <script id="template-error" type="text/x-handlebars-template">
-            <div>
+            <div class="error">
                 <h2>{{ title }}</h2>
                 <p>{{ type_of_error }}</p>
             </div>

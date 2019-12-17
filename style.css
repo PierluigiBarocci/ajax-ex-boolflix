@@ -51,15 +51,15 @@ main {
     padding: 20px 0;
     color: lightgrey;
 }
-.mainview.container div {
+.mainview.container .error {
     text-align: center;
     padding: 20px 0;
     color: lightgrey;
 }
-.mainview.container div>h2 {
+.mainview.container .error>h2 {
     font-size: 55px;
 }
-.mainview.container div p {
+.mainview.container .error p {
     font-size: 25px;
     padding: 20px 0;
 }

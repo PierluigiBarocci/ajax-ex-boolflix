@@ -12,8 +12,7 @@
 //Click Search Icon
 $('#search_icon').click(function(){
     // empting container
-    $('.mainview.container').find('ul').remove();
-    $('.mainview.container').find('div').remove();
+    $('.mainview.container').empty();
     // input value
     var user_research = $('.searchbar > input').val();
     // condition user value
@@ -27,8 +26,7 @@ $('#search_icon').click(function(){
 //Click Enter
 $('.searchbar > input').keypress(function(event){
     if (event.which == 13) {
-        $('.mainview.container').find('ul').remove();
-        $('.mainview.container').find('div').remove();
+        $('.mainview.container').empty();
         var user_research = $('.searchbar > input').val();
         if (user_research.length < 3) {
             errorGenerator('Devi digitare almeno 3 caratteri...');
@@ -83,13 +81,6 @@ function mdbApiCall(choice) {
                 for (var i = 0; i < movies.length; i++) {
                     var film = movies[i];
                     cardGenerator(film);
-                    var prov_vote = (film.vote_average / 2);
-                    var stars_vote = Math.ceil(prov_vote);
-                    var star_full = '<i class="fas fa-star"></i>';
-                    var star_empty = '<i class="far fa-star"></i>';
-                    for (var j = 0; j < stars_vote; j++) {
-                        $('.mainview.container ul:last-child').append(star_full);
-                    };
                 };
             };
             // empting searchbar
@@ -105,11 +96,13 @@ function cardGenerator(object) {
     // generating a kind of card with the datas of the single movie
         var template_html = $("#template").html();
         var template_function = Handlebars.compile(template_html);
+        var stars_vote = (Math.ceil((object.vote_average / 2)));
         var properties = {
             'title': object.title,
             'ori_title': object.original_title,
             'language': object.original_language,
-            'vote': object.vote_average
+            'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
+            'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote)
         };
         var final = template_function(properties);
         $('.mainview.container').append(final);
