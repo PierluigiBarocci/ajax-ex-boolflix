@@ -133,7 +133,7 @@ function cardGenerator(object) {
                 flag_lang = '<img class="flag" src="images/it.ico" alt="lang">';
                 break;
             }
-            case 'sp' : {
+            case 'es' : {
                 flag_lang = '<img class="flag" src="images/sp.ico" alt="lang">';
                 break;
             }
