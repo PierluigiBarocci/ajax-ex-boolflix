@@ -73,15 +73,32 @@ function mdbApiCall(choice) {
         'method': 'GET',
         'success': function(data){
             var movies = data.results;
-            // if there are no movies
-            if (movies.length == 0) {
-                errorGenerator('Non ho trovato alcuna corrispondenza');
-            } else {
-                // ciclying the array of movies
-                for (var i = 0; i < movies.length; i++) {
-                    var film = movies[i];
-                    cardGenerator(film);
-                };
+            // ciclying the array of movies
+            for (var i = 0; i < movies.length; i++) {
+                var film = movies[i];
+                cardGenerator(film);
+            };
+            // empting searchbar
+            $('.searchbar > input').val('');
+        },
+        'error': function(){
+            alert('error');
+        }
+    });
+    $.ajax ({
+        'url': 'https://api.themoviedb.org/3/search/tv/',
+        'data': {
+            'api_key': '82d42d7ba19cc3f165f25f52f34da589',
+            'query': choice,
+            'language': 'it-IT'
+        },
+        'method': 'GET',
+        'success': function(data){
+            var movies = data.results;
+            // ciclying the array of movies
+            for (var i = 0; i < movies.length; i++) {
+                var film = movies[i];
+                cardGenerator(film);
             };
             // empting searchbar
             $('.searchbar > input').val('');
