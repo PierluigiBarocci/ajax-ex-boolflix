@@ -145,14 +145,25 @@ function cardGenerator(object) {
                 flag_lang = lang;
             }
         };
-        var properties = {
-            'title': object.name || object.title,
-            'ori_title': object.original_name || object.original_title,
-            'language': flag_lang,
-            'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
-            'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote)
-        };
-        console.log(object);
+        if (object.poster_path == null) {
+            var properties = {
+                'background': 'images/no_poster.jpg',
+                'title': object.name || object.title,
+                'ori_title': object.original_name || object.original_title,
+                'language': flag_lang,
+                'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
+                'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
+            };
+        } else{
+            var properties = {
+                'background': 'https://image.tmdb.org/t/p/w342' + object.poster_path,
+                'title': object.name || object.title,
+                'ori_title': object.original_name || object.original_title,
+                'language': flag_lang,
+                'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
+                'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
+            };
+        } 
         var final = template_function(properties);
         $('.mainview.container').append(final);
 }
