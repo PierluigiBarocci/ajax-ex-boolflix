@@ -144,8 +144,8 @@ function cardGenerator(object) {
             }
         };
         var properties = {
-            'title': object.title,
-            'ori_title': object.original_title,
+            'title': object.name,
+            'ori_title': object.original_name,
             'language': flag_lang,
             'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
             'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote)
