@@ -20,44 +20,17 @@
             </div>
         </header>
         <main>
-            <div class="mainview container">
-                <div class="card">
-                    <img class="background" src="images/no_poster.jpg" alt="poster">
-                    <ul>
-                        <li>Titolo: {{ title }}</li>
-                        <li>Titolo Originale: {{ ori_title }}</li>
-                        <li>Lingua: {{{ language }}} </li>
-                        <li>Voto: {{{ vote }}}{{{ no_vote }}}</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <img class="background" src="images/no_poster.jpg" alt="poster">
-                    <ul>
-                        <li>Titolo: {{ title }}</li>
-                        <li>Titolo Originale: {{ ori_title }}</li>
-                        <li>Lingua: {{{ language }}} </li>
-                        <li>Voto: {{{ vote }}}{{{ no_vote }}}</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <img class="background" src="images/no_poster.jpg" alt="poster">
-                    <ul>
-                        <li>Titolo: {{ title }}</li>
-                        <li>Titolo Originale: {{ ori_title }}</li>
-                        <li>Lingua: {{{ language }}} </li>
-                        <li>Voto: {{{ vote }}}{{{ no_vote }}}</li>
-                    </ul>
-                </div>
-            </div>
+            <div class="mainview container"></div>
         </main>
         <script id="template" type="text/x-handlebars-template">
             <div class="card">
                 <img class="background" src="{{background}}" alt="poster">
-                <ul>
-                    <li>Titolo: {{ title }}</li>
-                    <li>Titolo Originale: {{ ori_title }}</li>
-                    <li>Lingua: {{{ language }}} </li>
-                    <li>Voto: {{{ vote }}}{{{ no_vote }}}</li>
+                <ul class="properties">
+                    <li><strong>Titolo:</strong> {{ title }}</li>
+                    <li><strong>Titolo Originale:</strong> {{ ori_title }}</li>
+                    <li><strong>Lingua:</strong> {{{ language }}} </li>
+                    <li><strong>Voto:</strong> {{{ vote }}}{{{ no_vote }}}</li>
+                    <li><strong>Overview:</strong> {{ overview }}</li>
                 </ul>
             </div>
         </script>

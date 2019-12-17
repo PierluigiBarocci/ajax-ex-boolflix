@@ -47,10 +47,37 @@ main {
     color: white;
     cursor: pointer;
 }
-.mainview.container ul {
-    padding: 20px 0;
-    color: lightgrey;
+.mainview.container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
+.card {
+    margin: 20px 0;
+    position: relative;
+    cursor: pointer;
+}
+.mainview.container ul {
+    list-style: none;
+    padding: 40px 10px 10px 10px;
+    color: lightgrey;
+    position: absolute;
+    top: 0;
+}
+.properties {
+    display: none;
+    background-color: black;
+    width: 270px;
+    height: 410px;
+    border: 1px solid lightgrey;
+}
+.properties li {
+    padding: 5px 0;
+}
+.properties i {
+    color: yellow;
+}
+
 .mainview.container .error {
     text-align: center;
     padding: 20px 0;
@@ -69,4 +96,5 @@ img.flag {
 }
 .background {
     width: 270px;
+    height: 410px;
 }
