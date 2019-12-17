@@ -96,11 +96,40 @@ function cardGenerator(object) {
     // generating a kind of card with the datas of the single movie
         var template_html = $("#template").html();
         var template_function = Handlebars.compile(template_html);
+        // var for the stars vote
         var stars_vote = (Math.ceil((object.vote_average / 2)));
+        var lang = object.original_language;
+        // switch case for the languages flags
+        var flag_lang = '';
+        switch (lang) {
+            case 'en' : {
+                flag_lang = '<img class="flag" src="images/en.ico" alt="lang">';
+                break;
+            }
+            case 'fr' : {
+                flag_lang = '<img class="flag" src="images/fr.ico" alt="lang">';
+                break;
+            }
+            case 'it' : {
+                flag_lang = '<img class="flag" src="images/it.ico" alt="lang">';
+                break;
+            }
+            case 'sp' : {
+                flag_lang = '<img class="flag" src="images/sp.ico" alt="lang">';
+                break;
+            }
+            case 'de' : {
+                flag_lang = '<img class="flag" src="images/de.ico" alt="lang">';
+                break;
+            }
+            default: {
+                flag_lang = lang;
+            }
+        };
         var properties = {
             'title': object.title,
             'ori_title': object.original_title,
-            'language': object.original_language,
+            'language': flag_lang,
             'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
             'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote)
         };

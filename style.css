@@ -63,3 +63,7 @@ main {
     font-size: 25px;
     padding: 20px 0;
 }
+img.flag {
+    width: 18px;
+    height: 18px;
+}
