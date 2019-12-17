@@ -124,28 +124,20 @@ function cardGenerator(object) {
             }
         };
         if (object.poster_path == null) {
-            var properties = {
-                // if there aren't posters I get a standard image
-                'background': 'images/no_poster.jpg',
-                'title': object.name || object.title,
-                'ori_title': object.original_name || object.original_title,
-                'language': flag_lang,
-                'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
-                'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
-                // I want to slice the overview at 300 char
-                'overview': (object.overview).slice(0, 300) + '...'
-            };
-        } else{
-            var properties = {
-                'background': 'https://image.tmdb.org/t/p/w342' + object.poster_path,
-                'title': object.name || object.title,
-                'ori_title': object.original_name || object.original_title,
-                'language': flag_lang,
-                'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
-                'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
-                'overview': (object.overview).slice(0, 300) + '...'
-            };
-        }
+            // if there isn't a poster available, I get a standard Image
+            var background = 'images/no_poster.jpg';
+        } else {
+            var background = 'https://image.tmdb.org/t/p/w342' + object.poster_path;
+        };
+        var properties = {
+            'background': background,
+            'title': object.name || object.title,
+            'ori_title': object.original_name || object.original_title,
+            'language': flag_lang,
+            'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
+            'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
+            'overview': (object.overview).slice(0, 300) + '...'
+        };
         var final = template_function(properties);
         $('.mainview.container').append(final);
 }
