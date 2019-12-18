@@ -36,22 +36,11 @@ $.ajax({
         for (var i = 0; i < (data.genres).length; i++) {
             allApiMovieGen.push(data.genres[i]);
         }
-        console.log(allApiMovieGen);
-        console.log(allApiTvGen);
-        for (var i = 0; i < allApiMovieGen.length; i++) {
-            var current_id = allApiMovieGen[i].id;
-            if (film_genre.includes(current_id)) {
-                var current_name = allApiMovieGen[i].name;
-                fliying_genere.push(current_name);
-            }
-        }
-        console.log(fliying_genere);
     },
     'error': function(){
         alert('error');
     },
 })
-var film_genre = [28, 12, 878]
 var fliying_genere = [];
 $.ajax({
     'url': 'https://api.themoviedb.org/3/genre/tv/list?api_key=82d42d7ba19cc3f165f25f52f34da589&language=it-IT',
@@ -179,8 +168,16 @@ function cardGenerator(object) {
         };
         var id_movie = object.id;
         var array_attori = [];
-        var genere = object.genre_ids;
-        console.log(genere);
+        var generi = object.genre_ids;
+        var fliying_genere = [];
+        for (var i = 0; i < allApiMovieGen.length; i++) {
+            var current_id = allApiMovieGen[i].id;
+            if (generi.includes(current_id)) {
+                var current_name = allApiMovieGen[i].name;
+                fliying_genere.push(current_name);
+            }
+        }
+        console.log(fliying_genere);
         $.ajax ({
             'url': 'https://api.themoviedb.org/3' + type + id_movie + '/credits?api_key=82d42d7ba19cc3f165f25f52f34da589',
             'method': 'GET',
@@ -205,7 +202,7 @@ function cardGenerator(object) {
                     'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
                     'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
                     'overview': (object.overview).slice(0, 150) + '...',
-                    'cast': lista_attori
+                    'cast': lista_attori,
                 };
                 var final = template_function(properties);
                 $('.mainview.container').append(final);
