@@ -166,18 +166,27 @@ function cardGenerator(object) {
             var original = object.original_name;
             var type = '/tv/';
         };
-        var id_movie = object.id;
-        var array_attori = [];
         var generi = object.genre_ids;
         var fliying_genere = [];
-        for (var i = 0; i < allApiMovieGen.length; i++) {
-            var current_id = allApiMovieGen[i].id;
-            if (generi.includes(current_id)) {
-                var current_name = allApiMovieGen[i].name;
-                fliying_genere.push(current_name);
+        if (type == '/movie/' ) {
+            for (var i = 0; i < allApiMovieGen.length; i++) {
+                var current_id = allApiMovieGen[i].id;
+                if (generi.includes(current_id)) {
+                    var current_name = allApiMovieGen[i].name;
+                    fliying_genere.push(current_name);
+                }
+            }
+        } else {
+            for (var i = 0; i < allApiTvGen.length; i++) {
+                var current_id = allApiTvGen[i].id;
+                if (generi.includes(current_id)) {
+                    var current_name = allApiTvGen[i].name;
+                    fliying_genere.push(current_name);
+                }
             }
         }
-        console.log(fliying_genere);
+        var id_movie = object.id;
+        var array_attori = [];
         $.ajax ({
             'url': 'https://api.themoviedb.org/3' + type + id_movie + '/credits?api_key=82d42d7ba19cc3f165f25f52f34da589',
             'method': 'GET',
@@ -194,6 +203,11 @@ function cardGenerator(object) {
                 } else {
                     var lista_attori = 'Cast not available';
                 }
+                var stringa_generi = '';
+                for (var i = 0; i < fliying_genere.length; i++) {
+                    var stringa_generi = stringa_generi + '<strong>Genere ' + (i + 1) + ':</strong> ' + fliying_genere[i] + ', ' + '<br/>';
+                }
+                var final_genere = stringa_generi.slice(0, (stringa_generi.length - 7));
                 var properties = {
                     'background': background,
                     'title': title,
@@ -203,6 +217,7 @@ function cardGenerator(object) {
                     'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
                     'overview': (object.overview).slice(0, 150) + '...',
                     'cast': lista_attori,
+                    'generi': final_genere
                 };
                 var final = template_function(properties);
                 $('.mainview.container').append(final);
