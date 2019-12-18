@@ -129,10 +129,20 @@ function cardGenerator(object) {
         } else {
             var background = 'https://image.tmdb.org/t/p/w342' + object.poster_path;
         };
+        if (object.hasOwnProperty('title')) {
+            var title = object.title;
+        } else {
+            var title = object.name;
+        };
+        if (object.hasOwnProperty('original_title')) {
+            var original = object.original_title;
+        } else {
+            var original = object.original_name;
+        };
         var properties = {
             'background': background,
-            'title': object.name || object.title,
-            'ori_title': object.original_name || object.original_title,
+            'title': title,
+            'ori_title': original,
             'language': flag_lang,
             'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
             'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
