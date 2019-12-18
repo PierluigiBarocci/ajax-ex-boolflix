@@ -26,6 +26,45 @@ $('.searchbar > input').keypress(function(event){
         };
     }
 });
+// Searching for All Genres of Movies and Tv Shows
+var allApiMovieGen = [];
+var allApiTvGen = [];
+$.ajax({
+    'url': 'https://api.themoviedb.org/3/genre/movie/list?api_key=82d42d7ba19cc3f165f25f52f34da589&language=it-IT',
+    'method': 'GET',
+    'success': function(data){
+        for (var i = 0; i < (data.genres).length; i++) {
+            allApiMovieGen.push(data.genres[i]);
+        }
+        console.log(allApiMovieGen);
+        console.log(allApiTvGen);
+        for (var i = 0; i < allApiMovieGen.length; i++) {
+            var current_id = allApiMovieGen[i].id;
+            if (film_genre.includes(current_id)) {
+                var current_name = allApiMovieGen[i].name;
+                fliying_genere.push(current_name);
+            }
+        }
+        console.log(fliying_genere);
+    },
+    'error': function(){
+        alert('error');
+    },
+})
+var film_genre = [28, 12, 878]
+var fliying_genere = [];
+$.ajax({
+    'url': 'https://api.themoviedb.org/3/genre/tv/list?api_key=82d42d7ba19cc3f165f25f52f34da589&language=it-IT',
+    'method': 'GET',
+    'success': function(data){
+        for (var i = 0; i < (data.genres).length; i++) {
+            allApiTvGen.push(data.genres[i]);
+        }
+    },
+    'error': function(){
+        alert('error');
+    },
+})
 
 // when I go over the card
 // I want to show off the properites of the movie
