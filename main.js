@@ -139,6 +139,7 @@ function cardGenerator(object) {
         } else {
             var original = object.original_name;
         };
+        var id_movie = object.id;
         var properties = {
             'background': background,
             'title': title,
@@ -150,6 +151,7 @@ function cardGenerator(object) {
         };
         var final = template_function(properties);
         $('.mainview.container').append(final);
+        console.log(id_movie);
 }
 
 function errorGenerator(type) {
