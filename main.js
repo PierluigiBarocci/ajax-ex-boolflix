@@ -140,6 +140,8 @@ function cardGenerator(object) {
         };
         var id_movie = object.id;
         var array_attori = [];
+        var genere = object.genre_ids;
+        console.log(genere);
         $.ajax ({
             'url': 'https://api.themoviedb.org/3' + type + id_movie + '/credits?api_key=82d42d7ba19cc3f165f25f52f34da589',
             'method': 'GET',
