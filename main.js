@@ -140,18 +140,51 @@ function cardGenerator(object) {
             var original = object.original_name;
         };
         var id_movie = object.id;
-        var properties = {
-            'background': background,
-            'title': title,
-            'ori_title': original,
-            'language': flag_lang,
-            'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
-            'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
-            'overview': (object.overview).slice(0, 300) + '...'
-        };
-        var final = template_function(properties);
-        $('.mainview.container').append(final);
-        console.log(id_movie);
+        var array_attori = [];
+        $.ajax ({
+            'url': 'https://api.themoviedb.org/3/movie/' + id_movie + '/credits?api_key=82d42d7ba19cc3f165f25f52f34da589',
+            'method': 'GET',
+            'success': function(data){
+                var attori = data.cast;
+                for (var i = 0; i < 5; i++) {
+                    var attore = attori[i];
+                    var attore_nome = attore.name;
+                    array_attori.push(attore_nome);
+                };
+                console.log(array_attori);
+                var lista_attori = array_attori.join();
+                console.log(lista_attori);
+                var properties = {
+                    'background': background,
+                    'title': title,
+                    'ori_title': original,
+                    'language': flag_lang,
+                    'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
+                    'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
+                    'overview': (object.overview).slice(0, 300) + '...',
+                    'cast': lista_attori
+                };
+                var final = template_function(properties);
+                $('.mainview.container').append(final);
+                console.log(id_movie);
+            },
+            'error': function(){
+                alert('error');
+            }
+        });
+        // var properties = {
+        //     'background': background,
+        //     'title': title,
+        //     'ori_title': original,
+        //     'language': flag_lang,
+        //     'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
+        //     'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
+        //     'overview': (object.overview).slice(0, 300) + '...',
+        //     'cast': lista_attori
+        // };
+        // var final = template_function(properties);
+        // $('.mainview.container').append(final);
+        // console.log(id_movie);
 }
 
 function errorGenerator(type) {
