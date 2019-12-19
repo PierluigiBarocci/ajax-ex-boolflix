@@ -1,9 +1,29 @@
+// home page with the movies today in theatres
+$.ajax({
+    'url': 'https://api.themoviedb.org/3/movie/now_playing?api_key=82d42d7ba19cc3f165f25f52f34da589&language=it-IT&page=1',
+    'method': 'GET',
+    'success': function(data){
+        console.log(data.results);
+        var movies = data.results;
+        if (movies.length > 0) {
+            // ciclying the array of movies
+            for (var i = 0; i < movies.length; i++) {
+                var film = movies[i];
+                trandingGenerator(film);
+            };
+        }
 
+    },
+    'error': function(){
+        alert('error');
+    },
+})
 //Click Search Icon
 $('#search_icon').click(function(){
     // empting container
     $('#movie .card-wrapper').empty();
     $('#tv .card-wrapper').empty();
+    $('#trending').remove();
     $('#movie').removeClass('visible');
     $('#tv').removeClass('visible');
     // input value
@@ -21,6 +41,7 @@ $('.searchbar > input').keypress(function(event){
     if (event.which == 13) {
         $('#movie .card-wrapper').empty();
         $('#tv .card-wrapper').empty();
+        $('#trending').remove();
         $('#movie').removeClass('visible');
         $('#tv').removeClass('visible');
         var user_research = $('.searchbar > input').val();
@@ -306,4 +327,117 @@ function errorGenerator(type) {
     };
     var final = template_function(properties);
     $('.mainview.container').append(final);
+}
+
+function trandingGenerator(object){
+    var template_html = $("#template").html();
+    var template_function = Handlebars.compile(template_html);
+    // var for the stars vote
+    var stars_vote = (Math.ceil((object.vote_average / 2)));
+    var lang = object.original_language;
+    // switch case for the languages flags
+    var flag_lang = '';
+    switch (lang) {
+        case 'en' : {
+            flag_lang = '<img class="flag" src="images/en.ico" alt="lang">';
+            break;
+        }
+        case 'fr' : {
+            flag_lang = '<img class="flag" src="images/fr.ico" alt="lang">';
+            break;
+        }
+        case 'it' : {
+            flag_lang = '<img class="flag" src="images/it.ico" alt="lang">';
+            break;
+        }
+        case 'es' : {
+            flag_lang = '<img class="flag" src="images/sp.ico" alt="lang">';
+            break;
+        }
+        case 'de' : {
+            flag_lang = '<img class="flag" src="images/de.ico" alt="lang">';
+            break;
+        }
+        default: {
+            flag_lang = lang;
+        }
+    };
+    if (object.poster_path == null) {
+        // if there isn't a poster available, I get a standard Image
+        var background = 'images/no_poster.jpg';
+    } else {
+        var background = 'https://image.tmdb.org/t/p/w342' + object.poster_path;
+    };
+    if (object.hasOwnProperty('title')) {
+        var title = object.title;
+        var original = object.original_title;
+        var type = '/movie/';
+    } else {
+        var title = object.name;
+        var original = object.original_name;
+        var type = '/tv/';
+    };
+    var generi = object.genre_ids;
+    var fliying_genere = [];
+    if (type == '/movie/' ) {
+        for (var i = 0; i < allApiMovieGen.length; i++) {
+            var current_id = allApiMovieGen[i].id;
+            if (generi.includes(current_id)) {
+                var current_name = allApiMovieGen[i].name;
+                fliying_genere.push(current_name);
+            }
+        }
+    } else {
+        for (var i = 0; i < allApiTvGen.length; i++) {
+            var current_id = allApiTvGen[i].id;
+            if (generi.includes(current_id)) {
+                var current_name = allApiTvGen[i].name;
+                fliying_genere.push(current_name);
+            }
+        }
+    }
+    var id_movie = object.id;
+    var array_attori = [];
+    $.ajax ({
+        'url': 'https://api.themoviedb.org/3' + type + id_movie + '/credits?api_key=82d42d7ba19cc3f165f25f52f34da589',
+        'method': 'GET',
+        'success': function(data){
+            if ((data.cast).length != 0) {
+                var attori = data.cast;
+                for (var i = 0; i < attori.length; i++) {
+                    var attore = attori[i];
+                    var attore_nome = attore.name;
+                    array_attori.push(attore_nome);
+                };
+                var max5Actors = array_attori.slice(0, 5);
+                var lista_attori = max5Actors.join();
+            } else {
+                var lista_attori = 'Cast not available';
+            }
+            var stringa_generi = '';
+            var data_generi = fliying_genere.join(' ');
+            for (var i = 0; i < fliying_genere.length; i++) {
+                var stringa_generi = stringa_generi + '<strong>Genere ' + (i + 1) + ':</strong> ' + fliying_genere[i] + ', ' + '<br/>';
+            }
+            var final_genere = stringa_generi.slice(0, (stringa_generi.length - 7));
+            var properties = {
+                'background': background,
+                'title': title,
+                'ori_title': original,
+                'language': flag_lang,
+                'vote_number': stars_vote,
+                'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
+                'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
+                'overview': object.overview,
+                'cast': lista_attori,
+                'generi': final_genere,
+                'data': data_generi
+            };
+            var final = template_function(properties);
+            $('#trending').find('.card-wrapper').append(final);
+        },
+        'error': function(){
+            alert('error');
+        }
+    });
 }
