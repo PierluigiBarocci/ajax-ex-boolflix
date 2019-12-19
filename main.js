@@ -88,6 +88,30 @@ $('#choice').change(function(){
         });
     };
 });
+// the same, but for the genres
+$('#choice_genre').change(function(){
+    // the value of the select
+    var valore = $(this).val();
+    // if No Value
+    if (valore == '') {
+        // show off all the cards
+        $('.card').fadeIn();
+    } else{
+        // select each card
+        $('.card').each(function(){
+            // get the attribute data-voto
+            var data_oggetto_corrente = $(this).attr('data-generi');
+            // if they are equal
+            if ((data_oggetto_corrente.toLowerCase()).includes(valore.toLowerCase())) {
+                // show off this card
+                $(this).fadeIn();
+            } else {
+                // else, hide this
+                $(this).fadeOut();
+            }
+        });
+    };
+});
 
 // FUNCTIONS
 
