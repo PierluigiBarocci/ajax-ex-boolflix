@@ -41,7 +41,6 @@ $.ajax({
         alert('error');
     },
 })
-var fliying_genere = [];
 $.ajax({
     'url': 'https://api.themoviedb.org/3/genre/tv/list?api_key=82d42d7ba19cc3f165f25f52f34da589&language=it-IT',
     'method': 'GET',
@@ -65,6 +64,30 @@ $(document).on('mouseleave', '.card', function(){
     $('.properties').fadeOut();
 });
 
+// Change of value for the vote
+$('#choice').change(function(){
+    // the value of the select
+    var valore = $(this).val();
+    // if No Value
+    if (valore == '') {
+        // show off all the cards
+        $('.card').fadeIn();
+    } else{
+        // select each card
+        $('.card').each(function(){
+            // get the attribute data-voto
+            var data_oggetto_corrente = $(this).attr('data-voto');
+            // if they are equal
+            if (data_oggetto_corrente == valore) {
+                // show off this card
+                $(this).fadeIn();
+            } else {
+                // else, hide this
+                $(this).fadeOut();
+            }
+        });
+    };
+});
 
 // FUNCTIONS
 
@@ -204,6 +227,8 @@ function cardGenerator(object) {
                     var lista_attori = 'Cast not available';
                 }
                 var stringa_generi = '';
+                var data_generi = fliying_genere.join(' ');
+                console.log(data_generi);
                 for (var i = 0; i < fliying_genere.length; i++) {
                     var stringa_generi = stringa_generi + '<strong>Genere ' + (i + 1) + ':</strong> ' + fliying_genere[i] + ', ' + '<br/>';
                 }
@@ -213,11 +238,13 @@ function cardGenerator(object) {
                     'title': title,
                     'ori_title': original,
                     'language': flag_lang,
+                    'vote_number': stars_vote,
                     'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
                     'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
                     'overview': (object.overview).slice(0, 150) + '...',
                     'cast': lista_attori,
-                    'generi': final_genere
+                    'generi': final_genere,
+                    'data': data_generi
                 };
                 var final = template_function(properties);
                 $('.mainview.container').append(final);

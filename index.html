@@ -12,7 +12,17 @@
     <body>
         <header>
             <div class="container">
-                <div class="logo">Boolfix</div>
+                <div class="logo">
+                    Boolfix
+                    <select id="choice">
+                        <option value="">Seleziona Valutazione Film </option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
                 <div class="searchbar">
                     <input type="text" placeholder="Cerca titolo...">
                     <i id="search_icon" class="fas fa-search fa-md"></i>
@@ -23,7 +33,7 @@
             <div class="mainview container"></div>
         </main>
         <script id="template" type="text/x-handlebars-template">
-            <div class="card">
+            <div class="card" data-generi="{{data}}" data-voto="{{vote_number}}">
                 <img class="background" src="{{background}}" alt="poster">
                 <ul class="properties">
                     <li><strong>Titolo:</strong> {{ title }}</li>
