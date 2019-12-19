@@ -47,11 +47,6 @@ main {
     color: white;
     cursor: pointer;
 }
-.mainview.container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
 .card {
     margin: 20px 0;
     position: relative;
@@ -97,4 +92,41 @@ img.flag {
 .background {
     width: 270px;
     height: 410px;
+}
+.header-dynamic {
+    height: 80px;
+}
+.header-dynamic::after {
+    clear: both;
+    display: table;
+    content: '';
+}
+.type-object {
+    line-height: 80px;
+    height: 80px;
+    width: 30%;
+    float: left;
+    color: lightgrey;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.filters {
+    line-height: 80px;
+    height: 80px;
+    width: 70%;
+    float: left;
+    text-align: right;
+}
+
+.card-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+#movie, #tv {
+    display: none;
+}
+#movie.visible, #tv.visible {
+    display: block;
 }

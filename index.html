@@ -14,22 +14,6 @@
             <div class="container">
                 <div class="logo">
                     Boolfix
-                    <!-- <select id="choice">
-                        <option value="">Seleziona Valutazione Film </option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select> -->
-                    <select id="choice_genre">
-                        <option value="">Seleziona Un Genere </option>
-                        <option value="Azione">Azione</option>
-                        <option value="Avventura">Avventura</option>
-                        <option value="Fantascienza">Fantascienza</option>
-                        <option value="Horror">Horror</option>
-                        <option value="Romantico">Romantico</option>
-                    </select>
                 </div>
                 <div class="searchbar">
                     <input type="text" placeholder="Cerca titolo...">
@@ -38,7 +22,34 @@
             </div>
         </header>
         <main>
-            <div class="mainview container"></div>
+            <div class="mainview container">
+                <div id="movie">
+                    <div class="header-dynamic">
+                        <div class="type-object">
+                            <h2>Movies</h2>
+                        </div>
+                        <div class="filters">
+                            <select id="choice_genre_movies">
+                                <option value="">Seleziona Un Genere </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-wrapper"></div>
+                </div>
+                <div id="tv">
+                    <div class="header-dynamic">
+                        <div class="type-object">
+                            <h2>Series</h2>
+                        </div>
+                        <div class="filters">
+                            <select id="choice_genre_tv">
+                                <option value="">Seleziona Un Genere </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-wrapper"></div>
+                </div>
+            </div>
         </main>
         <script id="template" type="text/x-handlebars-template">
             <div class="card" data-generi="{{data}}" data-voto="{{vote_number}}">

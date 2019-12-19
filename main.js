@@ -2,7 +2,10 @@
 //Click Search Icon
 $('#search_icon').click(function(){
     // empting container
-    $('.mainview.container').empty();
+    $('#movie .card-wrapper').empty();
+    $('#tv .card-wrapper').empty();
+    $('#movie').removeClass('visible');
+    $('#tv').removeClass('visible');
     // input value
     var user_research = $('.searchbar > input').val();
     // condition user value
@@ -16,7 +19,10 @@ $('#search_icon').click(function(){
 //Click Enter
 $('.searchbar > input').keypress(function(event){
     if (event.which == 13) {
-        $('.mainview.container').empty();
+        $('#movie .card-wrapper').empty();
+        $('#tv .card-wrapper').empty();
+        $('#movie').removeClass('visible');
+        $('#tv').removeClass('visible');
         var user_research = $('.searchbar > input').val();
         if (user_research.length < 3) {
             errorGenerator('Devi digitare almeno 3 caratteri...');
@@ -35,6 +41,8 @@ $.ajax({
     'success': function(data){
         for (var i = 0; i < (data.genres).length; i++) {
             allApiMovieGen.push(data.genres[i]);
+            var objectList = '<option value="' + data.genres[i].name + '">' + data.genres[i].name + '</option>';
+            $('#choice_genre_movies').append(objectList);
         }
     },
     'error': function(){
@@ -47,6 +55,8 @@ $.ajax({
     'success': function(data){
         for (var i = 0; i < (data.genres).length; i++) {
             allApiTvGen.push(data.genres[i]);
+            var objectList = '<option value="' + data.genres[i].name + '">' + data.genres[i].name + '</option>';
+            $('#choice_genre_tv').append(objectList);
         }
     },
     'error': function(){
@@ -65,20 +75,20 @@ $(document).on('mouseleave', '.card', function(){
 });
 
 // Change of value for the vote
-$('#choice').change(function(){
+$('#choice_genre_tv').change(function(){
     // the value of the select
     var valore = $(this).val();
     // if No Value
     if (valore == '') {
         // show off all the cards
-        $('.card').fadeIn();
+        $('#tv .card-wrapper .card').fadeIn();
     } else{
         // select each card
-        $('.card').each(function(){
+        $('#tv .card-wrapper .card').each(function(){
             // get the attribute data-voto
-            var data_oggetto_corrente = $(this).attr('data-voto');
+            var data_oggetto_corrente = $(this).attr('data-generi');
             // if they are equal
-            if (data_oggetto_corrente == valore) {
+            if ((data_oggetto_corrente.toLowerCase()).includes(valore.toLowerCase())) {
                 // show off this card
                 $(this).fadeIn();
             } else {
@@ -89,16 +99,16 @@ $('#choice').change(function(){
     };
 });
 // the same, but for the genres
-$('#choice_genre').change(function(){
+$('#choice_genre_movies').change(function(){
     // the value of the select
     var valore = $(this).val();
     // if No Value
     if (valore == '') {
         // show off all the cards
-        $('.card').fadeIn();
+        $('#movie .card-wrapper .card').fadeIn();
     } else{
         // select each card
-        $('.card').each(function(){
+        $('#movie .card-wrapper .card').each(function(){
             // get the attribute data-voto
             var data_oggetto_corrente = $(this).attr('data-generi');
             // if they are equal
@@ -127,11 +137,13 @@ function mdbApiCall(choice) {
         'method': 'GET',
         'success': function(data){
             var movies = data.results;
-            // ciclying the array of movies
-            for (var i = 0; i < movies.length; i++) {
-                var film = movies[i];
-                cardGenerator(film);
-            };
+            if (movies.length > 0) {
+                // ciclying the array of movies
+                for (var i = 0; i < movies.length; i++) {
+                    var film = movies[i];
+                    cardGenerator(film);
+                };
+            }
             // empting searchbar
             $('.searchbar > input').val('');
         },
@@ -150,6 +162,7 @@ function mdbApiCall(choice) {
         'method': 'GET',
         'success': function(data){
             var movies = data.results;
+            console.log(movies);
             // ciclying the array of movies
             for (var i = 0; i < movies.length; i++) {
                 var film = movies[i];
@@ -252,7 +265,6 @@ function cardGenerator(object) {
                 }
                 var stringa_generi = '';
                 var data_generi = fliying_genere.join(' ');
-                console.log(data_generi);
                 for (var i = 0; i < fliying_genere.length; i++) {
                     var stringa_generi = stringa_generi + '<strong>Genere ' + (i + 1) + ':</strong> ' + fliying_genere[i] + ', ' + '<br/>';
                 }
@@ -271,7 +283,13 @@ function cardGenerator(object) {
                     'data': data_generi
                 };
                 var final = template_function(properties);
-                $('.mainview.container').append(final);
+                if (type == '/movie/') {
+                    $('#movie').find('.card-wrapper').append(final);
+                    $('#movie').addClass('visible');
+                } else {
+                    $('#tv').find('.card-wrapper').append(final);
+                    $('#tv').addClass('visible');
+                }
             },
             'error': function(){
                 alert('error');
