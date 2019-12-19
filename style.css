@@ -54,7 +54,7 @@ main {
 }
 .mainview.container ul {
     list-style: none;
-    padding: 5px 10px 0 10px;
+    padding: 5px 10px 5px 10px;
     color: lightgrey;
     position: absolute;
     top: 0;
@@ -64,6 +64,7 @@ main {
     background-color: black;
     width: 270px;
     height: 410px;
+    overflow-y: auto;
     border: 1px solid lightgrey;
 }
 .properties li {

@@ -277,7 +277,7 @@ function cardGenerator(object) {
                     'vote_number': stars_vote,
                     'vote': '<i class="fas fa-star"></i>'.repeat(stars_vote),
                     'no_vote': '<i class="far fa-star"></i>'.repeat(5 - stars_vote),
-                    'overview': (object.overview).slice(0, 150) + '...',
+                    'overview': object.overview,
                     'cast': lista_attori,
                     'generi': final_genere,
                     'data': data_generi
